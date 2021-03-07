@@ -24,6 +24,6 @@ public class RestaurantController {
 
     @GetMapping("/findAll")
     public Response findAll(){
-        return restaurantService.findAll();git
+        return restaurantService.findAll();
     }
 }
