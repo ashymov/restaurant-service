@@ -8,5 +8,6 @@ public interface DishService {
     Response save(DishDto dishDto);
     Response update(DishDto dishDto);
     Response upload(MultipartFile multipartFile,Long dishId);
+    Response delete(Long dishId);
     Response findByRestaurant(Long restaurantId);
 }

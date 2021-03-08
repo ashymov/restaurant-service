@@ -108,5 +108,18 @@ public class DishServiceImpl implements DishService {
 
     }
 
+    @Override
+    public Response delete(Long dishId) {
+        Response response = Response.getResponse();
+        Dish dish = dishRepo.findById(dishId).orElse(null);
+        if (dish == null){
+            response.setStatus(0);
+            response.setMessage("Не найдено!");
+            return  response;
+        }
+        dishRepo.delete(dish);
+        return response;
+    }
+
 
 }

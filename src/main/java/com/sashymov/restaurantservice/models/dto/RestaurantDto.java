@@ -11,4 +11,5 @@ public class RestaurantDto {
     private String phone;
     private String social;
     private File file;
+    private int orderNum;
 }

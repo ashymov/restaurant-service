@@ -1,5 +1,6 @@
 package com.sashymov.restaurantservice.models.entities;
 
+import com.sun.istack.Nullable;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,5 +20,7 @@ public class Restaurant {
     @ManyToOne
     @JoinColumn(name = "file_id")
     private File file;
+    @Column(name = "orderNum")
+    private int orderNum;
 
 }

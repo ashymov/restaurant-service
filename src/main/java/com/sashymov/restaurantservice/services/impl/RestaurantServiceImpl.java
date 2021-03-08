@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -64,6 +66,40 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public Response update(RestaurantDto restaurantDto) {
+        Response response = Response.getResponse();
+        Restaurant restaurant = restaurantRepo.findById(restaurantDto.getId()).orElse(null);
+        if (restaurant == null){
+            response.setStatus(0);
+            response.setMessage("Не найдено!");
+            return response;
+        }
+        restaurant.setFile(restaurantDto.getFile());
+        restaurant.setDishCount(restaurantDto.getDishCount());
+        restaurant.setHours(restaurantDto.getHours());
+        restaurant.setId(restaurantDto.getId());
+        restaurant.setName(restaurantDto.getName());
+        restaurant.setPhone(restaurantDto.getPhone());
+        restaurant.setSocial(restaurantDto.getSocial());
+        restaurantRepo.save(restaurant);
+        response.setObject(restaurant);
+        return response;
+    }
+
+    @Override
+    public Response delete(Long restId) {
+        Response response = Response.getResponse();
+        Restaurant restaurant = restaurantRepo.findById(restId).orElse(null);
+        if (restaurant == null){
+            response.setStatus(0);
+            response.setMessage("Не найдено!");
+            return  response;
+        }
+        restaurantRepo.delete(restaurant);
+        return response;
+    }
+
+    @Override
     public RestaurantDto findById(Long restaurantId) {
 
         Restaurant restaurant = restaurantRepo.findById(restaurantId).orElse(null);
@@ -78,6 +114,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Response findAll() {
         Response response = Response.getResponse();
         List<Restaurant> restaurants = restaurantRepo.findAll();
+        restaurants = restaurants.stream().sorted(Comparator.comparing(Restaurant::getOrderNum)).collect(Collectors.toList());
         response.setObject(restaurants);
         return response;
     }

@@ -17,9 +17,20 @@ public class RestaurantController {
     public Response save(@RequestBody RestaurantDto restaurantDto){
         return restaurantService.save(restaurantDto);
     }
+
     @PostMapping("/upload")
     public Response upload(@RequestParam MultipartFile file,@RequestParam Long restaurantId){
         return restaurantService.upload(file,restaurantId);
+    }
+
+    @PutMapping("/update")
+    public Response update(@RequestBody RestaurantDto restaurantDto){
+        return restaurantService.update(restaurantDto);
+    }
+
+    @DeleteMapping("/delete")
+    public Response delete(@RequestParam Long restId){
+        return restaurantService.delete(restId);
     }
 
     @GetMapping("/findAll")

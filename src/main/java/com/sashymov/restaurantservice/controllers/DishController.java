@@ -26,6 +26,11 @@ public class DishController {
         return dishService.update(dishDto);
     }
 
+    @DeleteMapping("/delete")
+    public Response delete(@RequestParam Long dishId){
+        return dishService.delete(dishId);
+    }
+
     @GetMapping("/findByRestaurant")
     public Response findByRestaurant(@RequestParam Long partnerId) {
         return dishService.findByRestaurant(partnerId);
